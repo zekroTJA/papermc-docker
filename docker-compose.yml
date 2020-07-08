@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  
+  papermc:
+    build:
+      context: '.'
+      args:
+        EULA: 'true'
+    ports:
+      - '25565:25565'
+      - '25575:25575'
+    environment:
+      VERSION:        'latest'
+      BUILD:          'latest'
+      CACHE_DOWNLOAD: '1'
+      XMS:            '1G'
+      XMX:            '2G'
+      JAVA_ARGS:      ''
+    volumes:
+      - './papermc/logs:/var/server/logs'
+      - './papermc/plugins:/var/server/plugins'
+      - './papermc/world:/var/server/world'
+      - './papermc/world_nether:/var/server/world_nether'
+      - './papermc/world_the_end:/var/server/world_the_end'
+      - './papermc/banned-ips.json:/var/server/banned-ips.json'
+      - './papermc/banned-players.json:/var/server/banned-players.json'
+      - './papermc/bukkit.yml:/var/server/bukkit.yml'
+      - './papermc/commands.yml:/var/server/commands.yml'
+      - './papermc/help.yml:/var/server/help.yml'
+      - './papermc/ops.json:/var/server/ops.json'
+      - './papermc/paper.yml:/var/server/paper.yml'
+      - './papermc/permissions.yml:/var/server/permissions.yml'
+      - './papermc/server.properties:/var/server/server.properties'
+      - './papermc/spigot.yml:/var/server/spigot.yml'
+      - './papermc/usercache.json:/var/server/usercache.json'
+      - './papermc/whitelist.json:/var/server/whitelist.json'
+      
