@@ -1,4 +1,4 @@
-FROM openjdk:12-alpine
+FROM openjdk:16-alpine
 
 WORKDIR /var/server
 
