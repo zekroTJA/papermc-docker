@@ -1,7 +1,19 @@
 version: '3'
 
+volumes:
+  portainer:
+
 services:
   
+  portainer:
+    image: "portainer/portainer-ce:latest"
+    ports:
+      - "80:9000"
+    volumes:
+      - "portainer:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: on-failure
+
   papermc:
     build:
       context: '.'
@@ -17,6 +29,7 @@ services:
       XMS:            '1G'
       XMX:            '2G'
       JAVA_ARGS:      ''
+    restart: on-failure
     volumes:
       - './papermc/logs:/var/server/logs'
       - './papermc/plugins:/var/server/plugins'
