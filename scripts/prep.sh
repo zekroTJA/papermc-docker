@@ -26,6 +26,6 @@ CURR_VER=$([ -f $CURR_VER_FILE ] && cat $CURR_VER_FILE || echo "")
 RES=$(curl -sL "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD")
 jar_name=$(echo $RES | jq -rM .downloads.application.name)
 
-#echo "$API_ENDPOINT/projects/paper/$VERSION/builds/$BUILD/downloads/$jar_name"
-curl -Lo paper.jar "$API_ENDPOINT/projects/paper/$VERSION/builds/$BUILD/downloads/$jar_name"
+#echo "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD/downloads/$jar_name"
+curl -Lo paper.jar "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD/downloads/$jar_name"
 echo "$VERSION+$BUILD" > $CURR_VER_FILE
