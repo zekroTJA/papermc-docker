@@ -7,6 +7,6 @@ VERSION=$1
 [ -z $VERSION ] || [ "$VERSION" == "latest" ] \
     && VERSION=$(sh $(dirname $0)/get-latest-version.sh)
 
-RES=$(curl -sL "$API_ENDPOINT/paper/$VERSION")
+RES=$(curl -sL "$API_ENDPOINT/projects/paper/versions/$VERSION")
+echo $RES | jq -rM .builds[-1]
 
-echo $RES | jq -rM .builds.latest
