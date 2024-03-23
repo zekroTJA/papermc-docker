@@ -4,19 +4,20 @@ The [`Dockerfile`](Dockerfile) provided in this Repository creates a Docker Imag
 
 You can specify a `VERSION` and `BUILD` environment variable on startup to specify the used Minecraft version and Paper build. Both is defaultly set to `latest`, which will use the latest build on the latest Minecraft version.
 
+This image is now based on the [minebase](https://github.com/zekroTJA/minebase). For further information how to use the included RCON CLI or the automatic backup system, please refer to the minebase documentation.
+
 ## How To Build
 
 You need to build this Docker image by yourself. Just clone the repository to your server and build the image from there.
 
 ```
 $ git clone https://github.com/zekroTJA/papermc-docker.git .
-$ docker build . -t paper --build-arg EULA=true
+$ docker build . -t paper
 ```
-*You need to set the build argument `EULA=true` to agree to the [Minecraft EULA](http://account.mojang.com/documents/minecraft_eula).*
 
 ## How To Run
 
-The recommendet way to run this image is by using the provided [`docker-compose.yml`](docker-compose.yml).
+You can use the provided [`docker-compose.yml`](docker-compose.yml) to jumpstart your server deployment.
 
 ```
 $ docker-compose up -d --build

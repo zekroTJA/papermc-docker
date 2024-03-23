@@ -1,10 +1,12 @@
-version: '3'
-
 volumes:
   portainer:
 
+# Uncomment if you want to use backups.
+# secrets:
+#   minecraftrclone:
+#     file: rclone.conf
+
 services:
-  
   portainer:
     image: "portainer/portainer-ce:latest"
     ports:
@@ -14,38 +16,39 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
     restart: on-failure
 
+  # For local backup testing; please use an external storage for backups!
+  # minio:
+  #   image: quay.io/minio/minio
+  #   command: "server --console-address ':9001'"
+  #   ports:
+  #     - "9001:9001"
+  #     - "9000:9000"
+  #   environment:
+  #     MINIO_ROOT_USER: "root"
+  #     MINIO_ROOT_PASSWORD: "some-super-long-and-strong-password"
+  #     MINIO_VOLUMES: "/data"
+
   papermc:
     build:
-      context: '.'
-      args:
-        EULA: 'true'
+      context: "."
     ports:
-      - '25565:25565'
-      - '25575:25575'
+      - "25565:25565"
+      - "25575:25575"
     environment:
-      VERSION:        'latest'
-      BUILD:          'latest'
-      CACHE_DOWNLOAD: '1'
-      XMS:            '1G'
-      XMX:            '2G'
-      JAVA_ARGS:      ''
+      VERSION: "latest"
+      BUILD: "latest"
+      CACHE_DOWNLOAD: "true"
+      XMS: "1G"
+      XMX: "2G"
+      PRE_START_BACKUP: "true"
+      MAX_AGE_BACKUP_FILES: "30d"
+    # Uncomment if you want to use backups.
+    # secrets:
+    #   - source: minecraftrclone
+    #     target: rcloneconfig
     restart: on-failure
     volumes:
-      - './papermc/logs:/var/server/logs'
-      - './papermc/plugins:/var/server/plugins'
-      - './papermc/world:/var/server/world'
-      - './papermc/world_nether:/var/server/world_nether'
-      - './papermc/world_the_end:/var/server/world_the_end'
-      - './papermc/banned-ips.json:/var/server/banned-ips.json'
-      - './papermc/banned-players.json:/var/server/banned-players.json'
-      - './papermc/bukkit.yml:/var/server/bukkit.yml'
-      - './papermc/commands.yml:/var/server/commands.yml'
-      - './papermc/help.yml:/var/server/help.yml'
-      - './papermc/ops.json:/var/server/ops.json'
-      - './papermc/paper.yml:/var/server/paper.yml'
-      - './papermc/permissions.yml:/var/server/permissions.yml'
-      - './papermc/server.properties:/var/server/server.properties'
-      - './papermc/spigot.yml:/var/server/spigot.yml'
-      - './papermc/usercache.json:/var/server/usercache.json'
-      - './papermc/whitelist.json:/var/server/whitelist.json'
-      
+      - "./paper/config:/etc/mcserver/config"
+      - "./paper/plugins:/etc/mcserver/plugins"
+      - "./paper/worlds:/etc/mcserver/worlds"
+      - "./paper/locals:/etc/mcserver/locals"
