@@ -2,6 +2,8 @@ FROM ghcr.io/zekrotja/minebase:jdk-21
 
 COPY scripts/ scripts/
 
+RUN chmod +x scripts/*.sh
+
 RUN mkdir -p /var/mcserver && \
     mkdir -p /etc/mcserver/worlds && \
     mkdir -p /etc/mcserver/plugins && \
