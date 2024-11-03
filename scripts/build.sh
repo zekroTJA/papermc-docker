@@ -15,7 +15,7 @@ if [ -z "$VERSION" ] || [ "$VERSION" == "latest" ]; then
 fi
 
 if [ -z "$BUILD" ] || [ "$BUILD" == "latest" ]; then
-    BUILD=$(sh "$(dirname "$0")"/get-latest-build.sh "$VERSION")
+    BUILD=$(bash "$(dirname "$0")"/get-latest-build.sh "$VERSION")
 fi
 
 
