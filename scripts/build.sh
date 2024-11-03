@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PURPLE="\033[0;35m"
+RESET="\033[0m"
+
 set -e
 
 . "$(dirname "$0")/consts.sh"
@@ -25,7 +28,16 @@ if [ "$CURR_VER" == "$VERSION+$BUILD" ] && [ "$USE_CACHE" == "true" ]; then
     exit 0
 fi
 
-RES=$(curl -sL "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD")
+set +e
+RES=$(curl -sLf "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD")
+status=$?
+set -e
+
+if [ $status -ne 0 ]; then
+    echo -e "${PURPLE}ERROR: No build with version $VERSION and build $BUILD existent!${RESET}"
+    echo "Download Url: $API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD"
+    exit 2
+fi
 jar_name=$(echo "$RES" | jq -rM '.downloads.application.name')
 
 curl -Lo paper.jar "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD/downloads/$jar_name"
