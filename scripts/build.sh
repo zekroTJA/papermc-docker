@@ -1,7 +1,6 @@
 #!/bin/bash
 
-PURPLE="\033[0;35m"
-RESET="\033[0m"
+source ./scripts/utils.sh
 
 set -e
 
