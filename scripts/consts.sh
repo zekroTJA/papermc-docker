@@ -1,1 +1,1 @@
-API_ENDPOINT="https://papermc.io/api/v2"
+API_ENDPOINT="https://api.papermc.io/v2"
