@@ -12,6 +12,14 @@ jobs:
   docker:
     name: Docker Autobuild
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        minebase_image:
+          - tag: jdk-11
+          - tag: jdk-21
+            latest: true
+          - tag: zulu-11
+          - tag: zulu-22
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,11 +31,20 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Lowercase repo name
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >> ${GITHUB_ENV}
+      - name: Set image tags
+        id: tags
+        run: |
+          TAGS="ghcr.io/${{ env.REPO }}:${{ matrix.minebase_image.tag }}"
+          if [[ "${{ matrix.minebase_image.latest }}" == "true" ]]; then
+            TAGS+=",ghcr.io/${{ env.REPO }}:latest"
+          fi
+          echo "TAGS=$TAGS" >> $GITHUB_OUTPUT
       - name: Build & Push
         uses: docker/build-push-action@v2
         with:
           context: ./
           push: true
           no-cache: true
-          tags: |-
-            ghcr.io/${{ env.REPO }}:latest
+          build-args: |-
+            MINEBASE_IMAGE=${{ matrix.minebase_image.tag }}
+          tags: ${{ steps.tags.outputs.TAGS }}

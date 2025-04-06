@@ -1,4 +1,8 @@
-FROM ghcr.io/zekrotja/minebase:jdk-21
+ARG MINEBASE_IMAGE="jdk-21"
+
+# ---------------------------------------------------
+
+FROM ghcr.io/zekrotja/minebase:$MINEBASE_IMAGE
 
 COPY scripts/ scripts/
 
