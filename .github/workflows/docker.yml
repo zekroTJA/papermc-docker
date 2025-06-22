@@ -16,8 +16,10 @@ jobs:
       matrix:
         minebase_image:
           - tag: jdk-11
+          - tag: jdk-17
           - tag: jdk-21
             latest: true
+          - tag: zulu-17
           - tag: zulu-11
           - tag: zulu-22
     steps:
