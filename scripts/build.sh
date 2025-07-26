@@ -51,9 +51,8 @@ JAR_DOWNLOAD_URL=$(echo "$BUILD_INFO" | jq -r '.downloads."server:default".url')
 
 # Check if download url is provided
 if [ "$JAR_DOWNLOAD_URL" = "null" ]; then
-  echo "No stable build for version $MINECRAFT_VERSION found :("
   echo -e "[ ${PURPLE}ERROR ${RESET}]${PURPLE} Error with version $VERSION and build $BUILD!${RESET}"
-  echo -e "[ ${PURPLE}ERROR ${RESET}]${PURPLE} No download url is provided by papermc!${RESET}"
+  echo -e "[ ${PURPLE}ERROR ${RESET}]${PURPLE} No download url was provided by PaperMC!${RESET}"
   echo -e "[ ${PURPLE}ERROR ${RESET}]${PURPLE} Used build info url: ${BUILD_INFO_URL}${RESET}"
   exit 3
 fi
