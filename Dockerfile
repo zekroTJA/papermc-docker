@@ -6,6 +6,7 @@ FROM ghcr.io/zekrotja/minebase:$MINEBASE_IMAGE
 
 COPY scripts/ scripts/
 
+RUN dos2unix ./scripts/*.sh /usr/bin/rcon
 RUN chmod +x scripts/*.sh
 
 RUN mkdir -p /var/mcserver && \
