@@ -31,17 +31,30 @@ if [ "$CURR_VER" == "$VERSION+$BUILD" ] && [ "$USE_CACHE" == "true" ]; then
     exit 0
 fi
 
-set +e
-RES=$(curl -sLf "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD")
-status=$?
-set -e
+# This query is based on the example published by papermc.
+# https://docs.papermc.io/misc/downloads-api/#downloading-the-latest-stable-build
+# Archived version: https://web.archive.org/web/20250726220949/https://docs.papermc.io/misc/downloads-api/#downloading-the-latest-stable-build
 
-if [ $status -ne 0 ]; then
-    echo -e "${PURPLE}ERROR: No build with version $VERSION and build $BUILD existent!${RESET}"
-    echo "Download Url: $API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD"
-    exit 2
+BUILD_INFO_URL="${API_ENDPOINT}/projects/paper/versions/${VERSION}/builds/$BUILD"
+BUILD_INFO=$(curl -s -H "User-Agent: $USER_AGENT" "${BUILD_INFO_URL}")
+
+# Check if the API returned an error
+if echo "$BUILD_INFO" | jq -e '.ok == false' > /dev/null 2>&1; then
+  ERROR_MSG=$(echo "$BUILD_INFO" | jq -r '.message // "Unknown error"')
+  echo "Error: $ERROR_MSG"
+  echo "Build info url: ${BUILD_INFO_URL}"
+  exit 2
 fi
-jar_name=$(echo "$RES" | jq -rM '.downloads.application.name')
 
-curl -Lo paper.jar "$API_ENDPOINT/projects/paper/versions/$VERSION/builds/$BUILD/downloads/$jar_name"
+JAR_DOWNLOAD_URL=$(echo "$BUILD_INFO" | jq -r '.downloads."server:default".url')
+
+# Check if download url is provided
+if [ "$JAR_DOWNLOAD_URL" = "null" ]; then
+  echo "No stable build for version $MINECRAFT_VERSION found :("
+  exit 3
+fi
+
+# Download the latest Paper version
+curl -Lo paper.jar "$JAR_DOWNLOAD_URL"
+
 echo "$VERSION+$BUILD" > $CURR_VER_FILE

@@ -35,8 +35,8 @@ services:
       - "25565:25565"
       - "25575:25575"
     environment:
-      VERSION: "latest"
-      BUILD: "latest"
+      VERSION: "1.21.7"
+      BUILD: "31"
       CACHE_DOWNLOAD: "true"
       XMS: "1G"
       XMX: "2G"
