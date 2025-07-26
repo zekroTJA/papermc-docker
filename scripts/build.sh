@@ -24,7 +24,7 @@ fi
 echo "Paper version $VERSION+$BUILD"
 echo "-----------------------------"
 
-CURR_VER=$([ -f $CURR_VER_FILE ] && cat $CURR_VER_FILE || echo "")
+CURR_VER=$([ -f "$CURR_VER_FILE" ] && cat "$CURR_VER_FILE" || echo "")
 
 if [ "$CURR_VER" == "$VERSION+$BUILD" ] && [ "$USE_CACHE" == "true" ]; then
     echo "Using binary from cache..."
@@ -86,4 +86,4 @@ else
   fi
 fi
 
-echo "$VERSION+$BUILD" > $CURR_VER_FILE
+echo "$VERSION+$BUILD" > "$CURR_VER_FILE"
