@@ -13,7 +13,7 @@ set -e
 CURR_VER_FILE="/tmp/current-server-version"
 
 if [ -z "$VERSION" ] || [ "$VERSION" == "latest" ]; then
-    VERSION=$(sh "$(dirname "$0")"/get-latest-version.sh)
+    VERSION=$(bash "$(dirname "$0")"/get-latest-version.sh)
 fi
 
 if [ -z "$BUILD" ] || [ "$BUILD" == "latest" ]; then
