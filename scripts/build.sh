@@ -58,7 +58,7 @@ if [ "$JAR_DOWNLOAD_URL" = "null" ]; then
   exit 3
 fi
 
-# Download the latest Paper version
+# Download the specified Paper version
 curl -Lo paper.jar "$JAR_DOWNLOAD_URL"
 
 echo "$VERSION+$BUILD" > $CURR_VER_FILE
