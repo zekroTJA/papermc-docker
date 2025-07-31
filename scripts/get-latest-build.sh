@@ -24,6 +24,6 @@ LATEST_BUILD=$(curl -s -H "User-Agent: $USER_AGENT" "${API_ENDPOINT}/projects/pa
 if [ "$LATEST_BUILD" != "null" ]; then
   echo "$LATEST_BUILD"
 else
-  echo "No stable build for version $MINECRAFT_VERSION found"
+  echo "No stable build for version $VERSION found" >&2
   exit 1
 fi
