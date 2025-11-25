@@ -1,4 +1,4 @@
-ARG MINEBASE_IMAGE="jdk-21"
+ARG MINEBASE_IMAGE="zulu-23"
 
 # ---------------------------------------------------
 

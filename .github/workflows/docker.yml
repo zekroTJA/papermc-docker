@@ -15,13 +15,12 @@ jobs:
     strategy:
       matrix:
         minebase_image:
-          - tag: jdk-11
-          - tag: jdk-17
-          - tag: jdk-21
-            latest: true
           - tag: zulu-17
-          - tag: zulu-11
           - tag: zulu-22
+          - tag: zulu-23
+            latest: true
+          - tag: zulu-24
+          - tag: zulu-25
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
