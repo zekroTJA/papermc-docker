@@ -18,14 +18,15 @@ jobs:
           - tag: zulu-17
           - tag: zulu-22
           - tag: zulu-23
-            latest: true
           - tag: zulu-24
           - tag: zulu-25
+            latest: true
+          - tag: zulu-26
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
       - name: Log in to ghcr
-        uses: docker/login-action@v1
+        uses: docker/login-action@master
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,7 +42,7 @@ jobs:
           fi
           echo "TAGS=$TAGS" >> $GITHUB_OUTPUT
       - name: Build & Push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@master
         with:
           context: ./
           push: true
